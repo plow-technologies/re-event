@@ -1,0 +1,8 @@
+.merlin
+node_modules/
+dist/
+lib/*
+build/
+*.log
+.DS_Store
+.bsb.lock
