@@ -1,10 +1,12 @@
 type event;
 
+type listener = event => unit;
+
 let emit: event => unit;
 
-let on: (string, event => unit) => unit;
+let on: (string, listener) => listener;
 
-let off: string => unit;
+let off: (string, listener) => unit;
 
 let createEvent: (string, option(Js.Json.t)) => event;
 

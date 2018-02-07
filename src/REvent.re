@@ -2,16 +2,18 @@ type dom;
 
 type event;
 
+type listener = event => unit;
+
 [@bs.val] external document : dom = "document";
 
 [@bs.send] external createEventLegacy : (dom, string) => event = "createEvent";
 
 [@bs.new] external js_createEvent : string => event = "Event";
 
-[@bs.send] external js_addEventListener : (dom, string, event => unit) => unit =
-  "addEventListener";
+[@bs.send] external js_addEventListener : (dom, string, listener) => listener = "addEventListener";
 
-[@bs.send] external js_removeEventListener : (dom, string) => unit = "removeEventListener";
+[@bs.send] external js_removeEventListener : (dom, string, listener) => unit =
+  "removeEventListener";
 
 [@bs.send] external js_dispatchEvent : (dom, event) => unit = "dispatchEvent";
 
@@ -21,10 +23,14 @@ type event;
 
 let emit = (event: event) : unit => js_dispatchEvent(document, event);
 
-let on = (eventName: string, callback: event => unit) =>
-  js_addEventListener(document, eventName, callback);
+/* We return the same*/
+let on = (eventType: string, listener: listener) : listener => {
+  js_addEventListener(document, eventType, listener);
+  listener
+};
 
-let off = (eventName: string) => js_removeEventListener(document, eventName);
+let off = (eventType: string, listener: listener) : unit =>
+  js_removeEventListener(document, eventType, listener);
 
 let createEvent = (eventName: string, payload: option(Js.Json.t)) => {
   let ev = js_createEvent(eventName);
