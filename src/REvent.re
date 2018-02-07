@@ -6,8 +6,6 @@ type listener = event => unit;
 
 [@bs.val] external document : dom = "document";
 
-[@bs.send] external createEventLegacy : (dom, string) => event = "createEvent";
-
 [@bs.new] external js_createEvent : string => event = "Event";
 
 [@bs.send] external js_addEventListener : (dom, string, listener) => listener = "addEventListener";
@@ -23,7 +21,7 @@ type listener = event => unit;
 
 let emit = (event: event) : unit => js_dispatchEvent(document, event);
 
-/* We return the same*/
+/* We return the same listener to easily remove it later using `off` */
 let on = (eventType: string, listener: listener) : listener => {
   js_addEventListener(document, eventType, listener);
   listener

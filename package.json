@@ -4,18 +4,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn run dev | yarn run bsb-watch",
-    "dev": "webpack-dev-server",
-    "static": "node scripts/serveStatic.js",
-    "bsb-watch": "bsb -make-world -w",
-    "build": "bsb -make-world && webpack  && cp -av public/* dist",
-    "bsb-build": "bsb -make-world",
-    "upload": "./s3_upload.sh",
-    "analyze": "NODE_ENV=analyze yarn build; analyze-bundle -b dist/build/main.js -s dist/build/stats.json",
-    "clean": "bsb -clean-world"
-  },
   "keywords": [],
   "author": "Shulhi Sapli",
   "license": "MIT",
