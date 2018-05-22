@@ -1,17 +1,17 @@
 {
   "name": "re-event",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "keywords": [],
   "author": "Shulhi Sapli",
   "license": "MIT",
-  "dependencies": {
-    "bs-json": "^0.2.3"
+  "scripts": {
+    "build": "bsb -make-world"
   },
   "devDependencies": {
-    "bs-platform": "2.1.0",
+    "bs-platform": "3.1.0",
     "compression-webpack-plugin": "^1.0.1",
     "css-loader": "^0.28.1",
     "electrode-bundle-analyzer": "^1.0.0",
