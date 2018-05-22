@@ -12,7 +12,6 @@
     "es6"
   ],
   "bs-dependencies": [
-    "bs-json"
   ],
   "sources": [
     {
