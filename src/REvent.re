@@ -26,6 +26,7 @@ let emit = (event: event) : unit => js_dispatchEvent(document, event);
 /* We return the same listener to easily remove it later using `off` */
 let on = (eventType: string, listener: listener) : listener => {
   js_addEventListener(document, eventType, listener, false);
+  listener
 };
 
 let off = (eventType: string, listener: listener) : unit =>
