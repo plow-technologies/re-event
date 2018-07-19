@@ -6,9 +6,11 @@ type listener = event => unit;
 
 [@bs.val] external document : dom = "document";
 
-[@bs.new] external js_createEvent : string => event = "Event";
+[@bs.send] external js_createEvent : (dom, string) => event = "createEvent"; 
 
-[@bs.send] external js_addEventListener : (dom, string, listener) => listener = "addEventListener";
+[@bs.send] external js_initEvent : (event, string, bool, bool) => unit = "initEvent";
+
+[@bs.send] external js_addEventListener : (dom, string, listener, bool) => listener = "addEventListener";
 
 [@bs.send] external js_removeEventListener : (dom, string, listener) => unit =
   "removeEventListener";
@@ -23,7 +25,7 @@ let emit = (event: event) : unit => js_dispatchEvent(document, event);
 
 /* We return the same listener to easily remove it later using `off` */
 let on = (eventType: string, listener: listener) : listener => {
-  js_addEventListener(document, eventType, listener);
+  js_addEventListener(document, eventType, listener, false);
   listener
 };
 
@@ -31,7 +33,8 @@ let off = (eventType: string, listener: listener) : unit =>
   js_removeEventListener(document, eventType, listener);
 
 let createEvent = (eventName: string, payload: option(Js.Json.t)) => {
-  let ev = js_createEvent(eventName);
+  let ev = js_createEvent(document, "Event");
+  js_initEvent(ev, eventName, true, true);
   switch payload {
   | None => ev
   | Some(p) =>
